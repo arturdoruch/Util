@@ -1,0 +1,17 @@
+{
+    "name": "arturdoruch/util",
+    "description": "Collection of usable utilities.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Artur Doruch",
+            "email": "arturdoruch@interia.pl"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+    },
+    "autoload": {
+        "psr-4" : { "ArturDoruch\\Util\\" : "" }
+    }
+}
