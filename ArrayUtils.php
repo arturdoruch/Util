@@ -17,11 +17,13 @@ class ArrayUtils
      */
     public static function inArrayI($needle, array $haystack)
     {
-        return array_filter($haystack, function($value) use ($needle) {
-            if (strtolower($needle) == strtolower($value)) {
+        foreach ($haystack as $value) {
+            if (!is_array($value) && strtolower($needle) == strtolower($value)) {
                 return true;
             }
-        });
+        }
+
+        return false;
     }
 }
  

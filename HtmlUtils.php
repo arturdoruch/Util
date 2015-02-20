@@ -17,15 +17,15 @@ class HtmlUtils
     public static function removeNoise($html, $removeImage = true)
     {
         $noise = array(
-            '<!--.*-->',
+            '<!(?=.*--.*)[^>]{4,}>',
             '<!\[CDATA\[[^\]]+\]\]>',
             '<\s*(script|noscript|iframe)[^>]*>[^>]*<\s*\/\s*\1\s*>',
-            '<\s*(meta|input)[^>]+>',
-            //<input type="image" src="/templates/maniacs_dle/images/send.png" name="image">
+            '<\s*(meta|input)(?!.*type="image")[^>]+>'
         );
 
         if ($removeImage === true) {
-            $noise[] = '<\s*(img)[^>]+>';
+            $noise[] = '<\s*img[^>]+>';
+            $noise[] = '<\s*input[^>]+type="image"[^>]+>';
         }
 
         foreach ($noise as $pattern) {

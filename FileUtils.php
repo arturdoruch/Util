@@ -57,8 +57,8 @@ class FileUtils
 
     public static function read($file)
     {
-    	if ($handle = @fopen($file, 'r')) {
-    		$text = fread($handle, filesize($file));
+    	if ($handle = fopen($file, 'r')) {
+    		$text = @fread($handle, filesize($file));
     		fclose($handle);
     		
     		return $text;
@@ -69,7 +69,7 @@ class FileUtils
 
     public static function write($file, $text, $mode = 'w')
     {
-        if ($handle = @fopen($file, $mode)) {
+        if ($handle = fopen($file, $mode)) {
     		fwrite($handle, $text);
     		fclose($handle);
             
