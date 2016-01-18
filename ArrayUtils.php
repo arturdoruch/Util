@@ -8,7 +8,8 @@ namespace ArturDoruch\Util;
 class ArrayUtils
 {
     /**
-     * Builds array tree structure. Code taken from http://stackoverflow.com/questions/8020947
+     * Builds array tree structure. Code taken from
+     * @link http://stackoverflow.com/questions/8020947
      *
      * @param array         $items
      * @param string|number $id
@@ -152,7 +153,7 @@ class ArrayUtils
      *
      * @return array The flattened multidimensional array.
      */
-    public static function flattenArray(array $array, $preserveKeys = false)
+    public static function flatten(array $array, $preserveKeys = false)
     {
         $flatten = array();
         $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($array));
@@ -175,32 +176,33 @@ class ArrayUtils
      * @param array $newArray A new array
      * @param int   $position
      */
-    public static function arrayInsert(array &$array, array $newArray, $position)
+    public static function insert(array &$array, array $newArray, $position)
     {
         $spliceArray = array_splice($array, 0, $position);
         $array = array_merge($spliceArray, $newArray, $array);
     }
 
     /**
-     * Merges values from two arrays recursively. Matching keys values in the second array
-     * overwrite those in the first array, e.g.
-     * arrayMergeRecursiveDistinct(['key' => 'org value'], ['key' => 'new value'])
-     *      => ['key' => 'new value']
+     * Recursively merges values from two arrays. Matching keys values
+     * in the second array and overwrite those in the first array.
+     * E.g. mergeDistinctly(['key' => 'org value'], ['key' => 'new value'])
+     *  => ['key' => 'new value']
      *
-     * Method taken from {@link} http://www.php.net/manual/en/function.array-merge-recursive.php#92195
+     * Code taken from
+     * @link http://www.php.net/manual/en/function.array-merge-recursive.php#92195
      *
-     * @param array $array1 The array with default values
-     * @param array $array2 The array with new values
+     * @param array $baseArray  The array with default values
+     * @param array $array      The array with new values
      *
      * @return array
      */
-    public static function arrayMergeRecursiveDistinct(array $array1, array $array2)
+    public static function mergeDistinctly(array $baseArray, array $array)
     {
-        $merged = $array1;
+        $merged = $baseArray;
 
-        foreach ($array2 as $key => $value) {
+        foreach ($array as $key => $value) {
             if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-                $merged[$key] = self::arrayMergeRecursiveDistinct($merged[$key], $value);
+                $merged[$key] = self::mergeDistinctly($merged[$key], $value);
             } else {
                 $merged[$key] = $value;
             }
