@@ -63,6 +63,18 @@ class StringUtils
     }
 
     /**
+     * Removes empty lines from text.
+     *
+     * @param string $text
+     *
+     * @return string
+     */
+    public static function removeEmptyLines(&$text)
+    {
+        $text = trim(preg_replace("/([\t ]*(\r?\n|\r))+/i", "\n", $text));
+    }
+
+    /**
      * Converts string into ftp format.
      *
      * @param string $string
