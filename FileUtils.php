@@ -10,78 +10,92 @@ class FileUtils
     /**
      * @param string $fileName
      *
-     * @throws \Exception
+     * @throws \RuntimeException
+     *
      * @return array File content as array.
      */
     public static function getFileContent($fileName)
     {
         if (!file_exists($fileName)) {
-            throw new \Exception('File "' . $fileName . '" was not found.');
+            throw new \RuntimeException('The file "' . $fileName . '" is not exist.');
         }
 
         return file($fileName);
     }
 
-
-    public static function humanizeSize($size)
+    /**
+     * Converts size integer value into human readable format.
+     *
+     * @param int $size The file size in bytes.
+     * @param int $precision
+     *
+     * @return string
+     */
+    public static function humanizeSize($size, $precision = 2)
     {
         if ($size < 1024) {
             return $size . ' B';
-        } else if ($size < 1048576) {
-            return round($size / 1024, 2) . ' KB'; // sprintf('%01.2f', $size / 1024.0));
-        } else if ($size >= 1048576 && $size < 1073741824) {
-            return round($size / 1048576, 2) . ' MB'; // sprintf('%01.2f', $size / (1024.0 * 1024)));
-        } else {
-            return round($size / 1073741824, 2) . ' GB';  // sprintf('%01.2f', $size / (1024.0 * 1024 * 1024)));
-        }
-    }
-
-    public static function rename($oldPath, $newPath)
-    {
-        if (file_exists($oldPath)) {
-            return @rename($oldPath, $newPath);
         }
 
-        return null;
+        if ($size < 1048576) {
+            return round($size / 1024, $precision) . ' KB';
+        }
+
+        if ($size >= 1048576 && $size < 1073741824) {
+            return round($size / 1048576, $precision) . ' MB';
+        }
+
+        return round($size / 1073741824, $precision) . ' GB';
     }
 
 
-    public static function removeDir($path)
+    public static function rename($originPath, $targetPath)
     {
-        if (file_exists($path)) {
-            return @rmdir($path);
+        if (file_exists($originPath)) {
+            return @rename($originPath, $targetPath);
         }
 
         return null;
     }
 
-    public static function read($file)
+
+    public static function removeDir($dir)
     {
-    	if ($handle = fopen($file, 'r')) {
-    		$text = @fread($handle, filesize($file));
+        if (file_exists($dir)) {
+            return @rmdir($dir);
+        }
+
+        return null;
+    }
+
+    public static function read($filename)
+    {
+    	if ($handle = fopen($filename, 'r')) {
+    		$text = @fread($handle, filesize($filename));
     		fclose($handle);
     		
     		return $text;
-    	} else {
-    		return false;
     	}
+
+        return false;
     }
 
-    public static function write($file, $text, $mode = 'w')
+    public static function write($filename, $text, $mode = 'w')
     {
-        if ($handle = fopen($file, $mode)) {
+        if ($handle = fopen($filename, $mode)) {
     		fwrite($handle, $text);
     		fclose($handle);
             
     		return true;
-    	} else {
-    		return false;
-    	}	
+    	}
+
+    	return false;
     }   
 
-    public static function writeToNewLine($file, $text)
+
+    public static function writeToNewLine($filename, $text)
     {
-        return static::write($file, $text."\r\n", 'a');    
+        return self::write($filename, $text  ."\r\n", 'a');
     }
 
 }
