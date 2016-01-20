@@ -4,20 +4,13 @@ Collection of useful utilities, which helps to work with:
 arrays, strings, html code, dates, files.
 
 ## Installation
-Add the following lines to your composer.json require and repositories blocks
+In terminal run command ```composer require "arturdoruch/util"```,
+or add the following line to your composer.json require block
 ```json
 "require": {
     ...
     "arturdoruch/util": "~1.0"
 },
-...
-"repositories": [
-    ...
-    {
-        "type": "vcs",
-        "url": "https://github.com/arturdoruch/Util"
-    }
-]
 ```
-Install package by running command in terminal ```composer update```
+and run command ```composer update```.
 
