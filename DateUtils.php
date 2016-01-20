@@ -23,7 +23,7 @@ class DateUtils
     );
 
     /**
-     * Converts month name from string into integer representation.
+     * Converts month string into integer representation.
      *
      * @param string $month      Month name. Can be short version like "Jan" or full name like: "January".
      * @param bool   $leaveZero  If true month number will be preceded by with "0".
