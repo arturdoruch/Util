@@ -10,37 +10,36 @@ class HtmlUtils
     /**
      * Removes unwanted elements and tags from html code.
      *
-     * @param string $html The html code.
-     * @param array|null $elements
-     * The array with names of html elements to remove.
-     * If array is empty, non of elements will be removed.
-     * If null, the default elements will be removed: comment, script, style.
-     *
-     * Available elements names and their meaning:
-     *  - head        head tag with html tag. Only body tag will be left
-     *  - comment     comments except IE hacks
-     *  - script      script, noscript and iframe tags
-     *  - style       style elements
-     *  - img         img tags and input tags with type of image
-     *  - input_meta  input and meta tags, except input with type of image
-     *  - all         all elements mentioned above
-     * @param bool $removeEmptyLines If true removes empty lines.
+     * @param string     $html        The html code.
+     * @param array|null $elements    The array with names of html elements to remove.
+     *                                If array is empty, non of elements will be removed.
+     *                                If null, the default elements will be removed: comment, script, style.
+     *                                Available elements names and their meaning:
+     *                                 - head        head tag with html tag. Only body tag will be left
+     *                                 - comment     comments except IE hacks
+     *                                 - script      script, noscript and iframe tags
+     *                                 - style       style elements
+     *                                 - img         img tags and input tags with type of image
+     *                                 - input_meta  input and meta tags, except input with type of image
+     *                                 - all         all elements mentioned above
+     * @param bool $removeEmptyLines  If true removes empty lines.
      *
      * @return string
      */
     public static function removeNoise(&$html, array $elements = null, $removeEmptyLines = true)
     {
-        $elements = array_flip($elements ?: array('comment', 'script', 'style'));
+        $elements = array_flip($elements !== null ? $elements : array('comment', 'script', 'style'));
 
         $patterns = array();
         $removeAll = isset($elements['all']);
         $removeScript = isset($elements['script']) || $removeAll;
 
         if (isset($elements['head']) || $removeAll) {
-            $patterns[] = '<\s*head[^>]*>.+<\s*/\s*head\s*>';
-            //if (preg_match('/(<\s*body[^>]*>.*<\/body>)/si', $html, $matches)) {
-            //    $html = $matches[1];
-            //}
+            if (preg_match('@(<\s*body[^>]*>.*<\s*/\s*body\s*>)@is', $html, $matches)) {
+                $html = $matches[1];
+            } else {
+                $patterns[] = '<\s*head[^>]*>.+<\s*/\s*head\s*>';
+            }
         }
 
         if ($removeScript) {

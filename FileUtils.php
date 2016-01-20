@@ -20,7 +20,7 @@ class FileUtils
             throw new \RuntimeException('The file "' . $fileName . '" is not exist.');
         }
 
-        return file($fileName);
+        return file($fileName, FILE_IGNORE_NEW_LINES);
     }
 
     /**
