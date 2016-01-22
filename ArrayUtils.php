@@ -1,10 +1,10 @@
 <?php
-/**
- * @author Artur Doruch <arturdoruch@interia.pl>
- */
 
 namespace ArturDoruch\Util;
 
+/**
+ * @author Artur Doruch <arturdoruch@interia.pl>
+ */
 class ArrayUtils
 {
     /**
@@ -64,8 +64,10 @@ class ArrayUtils
     /**
      * Recursively merges values from two arrays. Matching keys values
      * in the second array and overwrite those in the first array.
-     * E.g. mergeDistinctly(['key' => 'org value'], ['key' => 'new value'])
-     *  => ['key' => 'new value']
+     * E.g. mergeDistinctly(
+     *      ['key' => 'org value', 'foo' => 'bar'],
+     *      ['key' => 'new value']
+     * ) => ['key' => 'new value', 'foo' => 'bar']
      *
      * Code taken from
      * @link http://www.php.net/manual/en/function.array-merge-recursive.php#92195

@@ -1,26 +1,27 @@
 <?php
-/**
- * @author Artur Doruch <arturdoruch@interia.pl>
- */
 
 namespace ArturDoruch\Util;
 
+/**
+ * @author Artur Doruch <arturdoruch@interia.pl>
+ */
 class FileUtils
 {
     /**
-     * @param string $fileName
+     * Gets file content as array.
+     *
+     * @param string $filename The path to file.
      *
      * @throws \RuntimeException
-     *
-     * @return array File content as array.
+     * @return array The file content as array.
      */
-    public static function getFileContent($fileName)
+    public static function getFileContent($filename)
     {
-        if (!file_exists($fileName)) {
-            throw new \RuntimeException('The file "' . $fileName . '" is not exist.');
+        if (!file_exists($filename)) {
+            throw new \RuntimeException('The file "' . $filename . '" is not exist.');
         }
 
-        return file($fileName, FILE_IGNORE_NEW_LINES);
+        return file($filename, FILE_IGNORE_NEW_LINES);
     }
 
     /**
