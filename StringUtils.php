@@ -1,10 +1,10 @@
 <?php
-/**
- * @author Artur Doruch <arturdoruch@interia.pl>
- */
 
 namespace ArturDoruch\Util;
 
+/**
+ * @author Artur Doruch <arturdoruch@interia.pl>
+ */
 class StringUtils
 {
     /**
@@ -75,7 +75,8 @@ class StringUtils
     }
 
     /**
-     * Converts string into ftp format.
+     * Converts string into ftp format. Removes characters: / \ * : ? " < > |
+     * and cuts many spaces into one space.
      *
      * @param string $string
      * @param int    $length The length to which string should be truncated.
@@ -84,7 +85,7 @@ class StringUtils
      */
     public static function toFtpFormat($string, $length = null)
     {
-        $string = preg_replace('@[\/\\\*\:\?"<>\|]*@', '', $string);
+        $string = preg_replace('/[\/\\\*\:\?"<>\|]*/', '', $string);
         $string = preg_replace('/[ ]{2,}/', ' ', $string);
 
         if ($length) {

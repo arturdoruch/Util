@@ -1,10 +1,10 @@
 <?php
-/**
- * @author Artur Doruch <arturdoruch@interia.pl>
- */
 
 namespace ArturDoruch\Util;
 
+/**
+ * @author Artur Doruch <arturdoruch@interia.pl>
+ */
 class DateUtils
 {
     private static $months = array(
