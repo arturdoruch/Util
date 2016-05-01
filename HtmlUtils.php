@@ -113,5 +113,4 @@ class HtmlUtils
 
         $html = preg_replace('/<!--'. $regexpPart .'.*?-->/is', '', $html);
     }
-
 }

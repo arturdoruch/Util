@@ -77,5 +77,4 @@ class DateUtils
 
         return $dateTimeToCompare->diff( new \DateTime() );
     }
-
 }

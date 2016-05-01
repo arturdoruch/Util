@@ -35,6 +35,5 @@ class DOMUtils
         $xpath = new \DOMXPath($dom);
         
         return $xpath->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' ".$className." ')]");            
-    }       
-    
+    }
 }
