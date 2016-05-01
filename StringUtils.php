@@ -88,11 +88,7 @@ class StringUtils
         $string = preg_replace('/[\/\\\*\:\?"<>\|]*/', '', $string);
         $string = preg_replace('/[ ]{2,}/', ' ', $string);
 
-        if ($length) {
-            return substr($string, 0, $length);
-        }
-
-        return substr($string, 0);
+        return substr($string, 0, $length);
     }
 
     /**
@@ -169,6 +165,5 @@ class StringUtils
     {
         return !!mb_detect_encoding($string, 'UTF-8', true);
     }
-
 }
  
