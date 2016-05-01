@@ -183,6 +183,39 @@ class ArrayUtils
     }
 
     /**
+     * Converts array with mixed keys (indexed, string) into associative array. For example:
+     * Input: array[
+     *     0 => 'foo',
+     *     1 => 'bar',
+     *     2 => 'baz',
+     *     'item' => ['bar' => 'baz']
+     * ]
+     * Output: array[
+     *     'foo' => 0,
+     *     'bar' => 1,
+     *     'baz' => 2,
+     *     'item' => ['bar' => 'baz']
+     * ]
+     *
+     * @param array $array The array with mixed keys.
+     *
+     * @return array Associative array
+     */
+    public static function toAssociative(array $array)
+    {
+        $associativeArray = array();
+        foreach ($array as $key => $value) {
+            if (is_string($value)) {
+                $associativeArray[$value] = $key;
+            } elseif (is_string($key)) {
+                $associativeArray[$key] = $value;
+            }
+        }
+
+        return $associativeArray;
+    }
+
+    /**
      * Parse json object into array
      *
      * @param string       $json        JSON object
@@ -212,6 +245,5 @@ class ArrayUtils
 
         return $data;
     }
-
 }
  
