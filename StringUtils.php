@@ -63,6 +63,28 @@ class StringUtils
     }
 
     /**
+     * Counts uppercase letters in string.
+     *
+     * @param string $string
+     * @return int
+     */
+    public static function countUppercaseLetters($string)
+    {
+        return strlen(preg_replace('/[^A-Z]+/', '', $string));
+    }
+
+    /**
+     * Counts words starts with uppercase letter. Single uppercase letter are ignored.
+     *
+     * @param string $string
+     * @return int
+     */
+    public static function countUppercaseWords($string)
+    {
+        return preg_match_all('/\b[A-Z][A-Za-z0-9]+\b/', str_replace('_', ' ', $string));
+    }
+
+    /**
      * Removes empty lines from text.
      *
      * @param string $text
