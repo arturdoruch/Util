@@ -21,12 +21,12 @@ class FileUtils
 
         if (false === $content) {
             if (is_dir($filename)) {
-                $error = 'The filename "' . $filename . '" is not a file.';
+                $error = 'The filename "'.$filename.'" is not a file.';
             } elseif (strlen($filename) > 255 && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                 // On Windows PHP can't read file with path length greater then 255 characters.
-                $error = 'The file "' . $filename . '" cannot be read. The path length is too long.';
+                $error = 'The file "'.$filename.'" cannot be read. The path length is too long.';
             } elseif (!file_exists($filename)) {
-                $error = 'The file "' . $filename . '" is not exist.';
+                $error = 'The file "'.$filename.'" is not exist.';
             } else {
                 $error = self::getLastErrorMessage();
             }
@@ -62,7 +62,7 @@ class FileUtils
      */
     public static function writeToNewLine($filename, $data)
     {
-        return self::putContents($filename, $data . "\r\n", FILE_APPEND);
+        return self::putContents($filename, $data.PHP_EOL, FILE_APPEND);
     }
 
     /**
@@ -97,18 +97,18 @@ class FileUtils
     public static function humanizeSize($size, $precision = 2)
     {
         if ($size < 1024) {
-            return $size . ' B';
+            return $size.' B';
         }
 
         if ($size < 1048576) {
-            return round($size / 1024, $precision) . ' KB';
+            return round($size / 1024, $precision).' KB';
         }
 
         if ($size >= 1048576 && $size < 1073741824) {
-            return round($size / 1048576, $precision) . ' MB';
+            return round($size / 1048576, $precision).' MB';
         }
 
-        return round($size / 1073741824, $precision) . ' GB';
+        return round($size / 1073741824, $precision).' GB';
     }
 
     /**
