@@ -8,28 +8,13 @@ namespace ArturDoruch\Util;
 class StringUtils
 {
     /**
-     * Translates string in camel case notation into underscore.
-     * E.g. fooBar -> foo_bar
-     *
-     * @param string $string String in camel case notation
-     *
-     * @return string $string translated into underscore notation
-     */
-    public static function deCamelize($string)
-    {
-        return preg_replace_callback('/([A-Z])/', function($match) {
-                return strtolower('_'.$match[1]);
-            }, lcfirst($string));
-    }
-
-    /**
      * Translates string in underscore notation into camel case.
      * E.g. foo_bar -> fooBar
      *
-     * @param string $string          String in underscore notation
-     * @param bool   $upperCaseFirst  Make string first character uppercase
+     * @param string $string          The string in underscore notation.
+     * @param bool   $upperCaseFirst  Make string first character uppercase.
      *
-     * @return string $string translated into camel case notation
+     * @return string
      */
     public static function camelize($string, $upperCaseFirst = false)
     {
@@ -40,6 +25,21 @@ class StringUtils
         return preg_replace_callback('/_([a-z\d])/', function($match) {
                 return strtoupper($match[1]);
             }, $string);
+    }
+
+    /**
+     * Translates string in camel case notation into underscore.
+     * E.g. fooBar -> foo_bar
+     *
+     * @param string $string The string in camel case notation.
+     *
+     * @return string
+     */
+    public static function deCamelize($string)
+    {
+        return preg_replace_callback('/([A-Z])/', function($match) {
+            return strtolower('_'.$match[1]);
+        }, lcfirst($string));
     }
 
     /**
@@ -85,7 +85,7 @@ class StringUtils
     }
 
     /**
-     * Removes empty lines from text.
+     * Removes empty lines from given text.
      *
      * @param string $text
      *
@@ -93,7 +93,19 @@ class StringUtils
      */
     public static function removeEmptyLines(&$text)
     {
-        $text = trim(preg_replace("/([\t ]*(\r?\n|\r))+/i", "\n", $text));
+        return $text = trim(preg_replace("/([\t ]*(\r?\n|\r))+/i", "\n", $text));
+    }
+
+    /**
+     * Removes non-breaking spaces from given text.
+     *
+     * @param string $text
+     *
+     * @return string
+     */
+    public static function removeNonBreakingSpaces(&$text)
+    {
+        return $text = strtr($text, array('&nbsp;' => ' '/*, '\xc2\xa0', ' '*/));
     }
 
     /**
@@ -125,11 +137,11 @@ class StringUtils
      */
     public static function convertW1250ToUTF8($string)
     {
-        if (static::hasUTF8Encoding($string)) {
+        if (self::hasUTF8Encoding($string)) {
             return $string;
         }
 
-        $map = array(
+        $charactersMap = array(
             chr(0x8A) => chr(0xA9),
             chr(0x8C) => chr(0xA6),
             chr(0x8D) => chr(0xAB),
@@ -173,19 +185,75 @@ class StringUtils
             chr(0xBB) => '&raquo;',
         );
 
-        return html_entity_decode(mb_convert_encoding(strtr($string, $map), 'UTF-8', 'ISO-8859-2'), ENT_QUOTES, 'UTF-8');
+        return html_entity_decode(mb_convert_encoding(strtr($string, $charactersMap), 'UTF-8', 'ISO-8859-2'), ENT_QUOTES, 'UTF-8');
     }
 
     /**
      * Checks if a string have UTF-8 character encoding.
      *
      * @param string $string
+     * @param bool   $strict Specifies whether to use the strict encoding detection or not.
      *
      * @return bool
      */
-    public static function hasUTF8Encoding($string)
+    public static function hasUTF8Encoding($string, $strict = false)
     {
-        return !!mb_detect_encoding($string, 'UTF-8', true);
+        return (bool) mb_detect_encoding($string, 'UTF-8', $strict);
+    }
+
+    /**
+     * Finds value within given string by regexp.
+     *
+     * @param string $pattern The regular expression pattern. Expression must contain
+     *                        at least one capturing group.
+     * @param string $string  The string to search within.
+     *
+     * @return string|null
+     */
+    public static function find($pattern, $string)
+    {
+        return preg_match($pattern, $string, $match) && isset($match[1]) ? $match[1] : null;
+    }
+
+    /**
+     * Finds multiple values within given string by regexp.
+     *
+     * @param string $pattern The regular expression pattern. Expression must contain
+     *                        at least one capturing group.
+     * @param string $string  The string to search within.
+     *
+     * @return array
+     */
+    public static function findAll($pattern, $string)
+    {
+        return preg_match_all($pattern, $string, $matches) && isset($matches[1]) ? $matches[1] : [];
+    }
+
+    /**
+     * Checks if searching phrase exists in given string.
+     *
+     * @param string $search
+     * @param string $string
+     * @param bool   $caseSensitive
+     *
+     * @return bool
+     */
+    public static function exists($search, $string, $caseSensitive = true)
+    {
+        return $caseSensitive === true ? strpos($string, $search) !== false : stripos($string, $search) !== false;
+    }
+
+    /**
+     * Checks if within given string, exist phrase matches by regexp.
+     *
+     * @param string $pattern The regular expression pattern.
+     * @param string $string
+     *
+     * @return bool
+     */
+    public static function existsByRegexp($pattern, $string)
+    {
+        return (bool) preg_match($pattern, $string);
     }
 }
  
