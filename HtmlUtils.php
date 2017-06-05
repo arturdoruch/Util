@@ -23,8 +23,6 @@ class HtmlUtils
      *                                 - input_meta  input and meta tags, except input with type of image
      *                                 - all         all elements mentioned above
      * @param bool $removeEmptyLines  If true removes empty lines.
-     *
-     * @return string
      */
     public static function removeNoise(&$html, array $elements = null, $removeEmptyLines = true)
     {
@@ -78,8 +76,6 @@ class HtmlUtils
      *
      * @param string $html
      * @param bool   $removeComments Remove html comments except Internet Explorer hacks.
-     *
-     * @return string
      */
     public static function minify(&$html, $removeComments = true)
     {

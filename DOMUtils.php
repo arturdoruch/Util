@@ -8,24 +8,24 @@ namespace ArturDoruch\Util;
 class DOMUtils
 {
     /**
-     * Creates a new DOMXPath from HTML content.
+     * Creates a new DOMXPath object from HTML code.
      *
-     * @param string $content HTML content.
+     * @param string $html The HTML code.
      *
      * @return \DOMXPath
      */
-    public static function createXPath($content)
+    public static function createXPath($html)
     {
-        $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
+        $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 
         $dom = new \DOMDocument('1.0', 'UTF-8');
-        @$dom->loadHTML($content);
+        @$dom->loadHTML($html);
 
         return new \DOMXPath($dom);
     }
 
     /**
-     * @param \DOMXPath|string $source
+     * @param \DOMXPath|string $source The DOMXPath object or html code.
      * @param string           $query The xpath query.
      *
      * @return \DOMNodeList|\DOMElement[]|null
@@ -33,7 +33,7 @@ class DOMUtils
     public static function getNodeList($source, $query)
     {
         if (is_string($source)) {
-            $source = static::createXPath($source);
+            $source = self::createXPath($source);
         } elseif (!$source instanceof \DOMXPath) {
             throw new \InvalidArgumentException(sprintf(
                     'Parameter $source must be type of string or instance of DOMXPath. But given "%s"', gettype($source)
@@ -46,44 +46,44 @@ class DOMUtils
     }
 
     /**
-     * @param \DOMXPath|string $xpath
+     * @param \DOMXPath|string $source The DOMXPath object or html code.
      * @param string           $query The xpath query.
      *
      * @return \DOMElement|null
      */
-    public static function getNode($xpath, $query)
+    public static function getNode($source, $query)
     {
-        $path = static::getNodeList($xpath, $query);
+        $path = self::getNodeList($source, $query);
 
         return !empty($path) ? $path->item(0) : null;
     }
 
     /**
-     * @param \DOMNode $element
+     * @param \DOMNode $node
      *
      * @return string
      */
-    public static function getInnerHTML(\DOMNode $element)
+    public static function getInnerHTML(\DOMNode $node)
     { 
         $innerHTML = ''; 
-        $children = $element->childNodes;
+        $children = $node->childNodes;
     
         foreach ($children as $child) { 
-            $innerHTML .= $element->ownerDocument->saveHTML($child);
+            $innerHTML .= $node->ownerDocument->saveHTML($child);
         }
     
         return $innerHTML; 
     }
 
     /**
-     * @param \DOMDocument $dom
+     * @param \DOMDocument $document
      * @param string       $className
      *
      * @return \DOMNodeList
      */
-    public static function getElementsByClassName(\DOMDocument $dom, $className)
+    public static function getElementsByClassName(\DOMDocument $document, $className)
     {
-        $xpath = new \DOMXPath($dom);
+        $xpath = new \DOMXPath($document);
         
         return $xpath->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' ".$className." ')]");            
     }
