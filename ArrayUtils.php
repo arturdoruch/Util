@@ -8,6 +8,28 @@ namespace ArturDoruch\Util;
 class ArrayUtils
 {
     /**
+     * Finds item in multidimensional array by array keys path.
+     *
+     * @param array $array
+     * @param array $keys The collection of array keys, which leads to searched array item.
+     * @param mixed $default The default value to return when array item is not found.
+     *
+     * @return array|mixed
+     */
+    public static function find(array $array, array $keys, $default = null)
+    {
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $array)) {
+                $array = $array[$key];
+            } else {
+                return $default;
+            }
+        }
+
+        return $array;
+    }
+
+    /**
      * Checks if a value exists in an array with case insensitive.
      *
      * @param array  $haystack
@@ -125,7 +147,7 @@ class ArrayUtils
      * @param string|number $parentId
      * @param string|number $childKey
      *
-     * @return array|null
+     * @return array
      */
     public static function buildTree(array $items, $id, $parentId, $childKey)
     {
@@ -219,7 +241,7 @@ class ArrayUtils
      * Parse json object into array
      *
      * @param string       $json        JSON object
-     * @param array|string $defaultKeys Default keys (if is array with their values) that should be in returned array.
+     * @param array|string $defaultKeys Default keys (if is array with their values) which should be in returned array.
      *
      * @return array
      */
