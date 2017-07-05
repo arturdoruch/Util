@@ -9,8 +9,7 @@ or add the following line to your composer.json require block
 ```json
 "require": {
     ...
-    "arturdoruch/util": "~1.0"
+    "arturdoruch/util": "^1.2.1"
 },
 ```
 and run command ```composer update```.
-
