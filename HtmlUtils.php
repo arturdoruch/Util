@@ -67,7 +67,7 @@ class HtmlUtils
         }
 
         if ($removeEmptyLines === true) {
-            StringUtils::removeEmptyLines($html);
+            $html = StringUtils::removeEmptyLines($html);
         }
     }
 

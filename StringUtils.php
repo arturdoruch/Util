@@ -91,9 +91,9 @@ class StringUtils
      *
      * @return string
      */
-    public static function removeEmptyLines(&$text)
+    public static function removeEmptyLines($text)
     {
-        return $text = trim(preg_replace("/([\t ]*(\r?\n|\r))+/i", "\n", $text));
+        return trim(preg_replace("/([\t ]*(\r?\n|\r))+/i", "\n", $text));
     }
 
     /**
@@ -103,9 +103,9 @@ class StringUtils
      *
      * @return string
      */
-    public static function removeNonBreakingSpaces(&$text)
+    public static function removeNonBreakingSpaces($text)
     {
-        return $text = strtr($text, array('&nbsp;' => ' '/*, '\xc2\xa0', ' '*/));
+        return strtr($text, array('&nbsp;' => ' '/*, '\xc2\xa0', ' '*/));
     }
 
     /**
