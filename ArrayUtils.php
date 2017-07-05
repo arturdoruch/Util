@@ -19,7 +19,7 @@ class ArrayUtils
     public static function find(array $array, array $keys, $default = null)
     {
         foreach ($keys as $key) {
-            if (array_key_exists($key, $array)) {
+            if (is_array($array) && array_key_exists($key, $array)) {
                 $array = $array[$key];
             } else {
                 return $default;
