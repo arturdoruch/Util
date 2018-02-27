@@ -134,6 +134,8 @@ class StringUtils
      * @param string $string
      *
      * @return string
+     *
+     * @deprecated since version 1.4, to be removed in 2.0.
      */
     public static function convertW1250ToUTF8($string)
     {
@@ -195,6 +197,8 @@ class StringUtils
      * @param bool   $strict Specifies whether to use the strict encoding detection or not.
      *
      * @return bool
+     *
+     * @deprecated since version 1.4, to be removed in 2.0. Use ArturDoruch\Util\CharacterCoding::isUTF8() instead.
      */
     public static function hasUTF8Encoding($string, $strict = false)
     {
