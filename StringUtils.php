@@ -230,17 +230,16 @@ class StringUtils
     }
 
     /**
-     * Checks if searching phrase exists in given string.
+     * Checks (with case sensitive) if searching phrase exists in given string.
      *
      * @param string $search
      * @param string $string
-     * @param bool   $caseSensitive
      *
      * @return bool
      */
-    public static function exists($search, $string, $caseSensitive = true)
+    public static function exists($search, $string)
     {
-        return $caseSensitive === true ? strpos($string, $search) !== false : stripos($string, $search) !== false;
+        return strpos($string, $search) !== false;
     }
 
     /**
