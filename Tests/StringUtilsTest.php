@@ -30,5 +30,12 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(3, $result);
     }
+
+
+    public function testStartsWith()
+    {
+        $this->assertTrue(StringUtils::startsWith('This', 'This is a test.'));
+        $this->assertFalse(StringUtils::startsWith('test', 'This is a test.'));
+    }
 }
  

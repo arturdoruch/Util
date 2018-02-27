@@ -254,5 +254,18 @@ class StringUtils
     {
         return (bool) preg_match($pattern, $string);
     }
+
+    /**
+     * Checks (with case sensitive) if string starts with expected phrase.
+     *
+     * @param string $search The expected phrase.
+     * @param string $string
+     *
+     * @return bool
+     */
+    public static function startsWith($search, $string)
+    {
+        return strpos($string, $search) === 0;
+    }
 }
  
