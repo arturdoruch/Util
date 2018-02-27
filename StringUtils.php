@@ -105,7 +105,7 @@ class StringUtils
      */
     public static function removeNonBreakingSpaces($text)
     {
-        return strtr($text, array('&nbsp;' => ' '/*, '\xc2\xa0', ' '*/));
+        return str_replace('&nbsp;', ' ', $text);
     }
 
     /**
