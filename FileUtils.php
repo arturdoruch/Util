@@ -26,9 +26,9 @@ class FileUtils
                 // On Windows PHP can't read file with path length greater then 255 characters.
                 $error = 'The file "'.$filename.'" cannot be read. The path length is too long.';
             } elseif (!file_exists($filename)) {
-                $error = 'The file "'.$filename.'" is not exist.';
+                $error = 'The file "'.$filename.'" does not exist.';
             } else {
-                $error = self::getLastErrorMessage();
+                $error = self::getLastError();
             }
 
             throw new \RuntimeException($error);
@@ -48,7 +48,7 @@ class FileUtils
     public static function putContents($filename, $data, $flags = null)
     {
         if (false === $result = @file_put_contents($filename, $data, $flags)) {
-            throw new \RuntimeException(sprintf('Failed put contents into file "%s": %s', $filename, self::getLastErrorMessage()));
+            throw new \RuntimeException(sprintf('Failed put contents into file "%s": %s', $filename, self::getLastError()));
         }
 
         return $result;
@@ -71,7 +71,7 @@ class FileUtils
     public static function remove($filename)
     {
         if (@unlink($filename) === false) {
-            throw new \RuntimeException(sprintf('Failed to remove "%s".%s', $filename, self::getLastErrorMessage()));
+            throw new \RuntimeException(sprintf('Failed to remove "%s". %s', $filename, self::getLastError()));
         }
     }
 
@@ -82,7 +82,26 @@ class FileUtils
     public static function rename($origin, $target)
     {
         if (@rename($origin, $target) === false) {
-            throw new \RuntimeException(sprintf('Failed to rename "%s".%s', $origin, self::getLastErrorMessage()));
+            throw new \RuntimeException(sprintf('Failed to rename "%s". %s', $origin, self::getLastError()));
+        }
+    }
+
+    /**
+     * Creates a directory recursively if does not exist.
+     *
+     * @param string $directory The directory path.
+     * @param int $mode
+     *
+     * @throws \RuntimeException
+     */
+    public static function createDirectory($directory, $mode = 0777)
+    {
+        if (is_dir($directory)) {
+            return;
+        }
+
+        if (@mkdir($directory, $mode, true) === false) {
+            throw new \RuntimeException(sprintf('Failed to create directory "%s". %s', $directory, self::getLastError()));
         }
     }
 
@@ -114,10 +133,10 @@ class FileUtils
     /**
      * @return string
      */
-    private static function getLastErrorMessage()
+    private static function getLastError()
     {
         $error = error_get_last();
 
-        return substr($error['message'], strpos($error['message'], '):') + 2);
+        return substr($error['message'], strpos($error['message'], '):') + 3);
     }
 }
