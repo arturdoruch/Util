@@ -1,15 +1,19 @@
 # Util
 
-Collection of useful utilities, which helps to work with:
-arrays, strings, html code, dates, files.
+A collection of common utilities.
+
+## Contents
+
+ - ArrayUtils
+ - CharacterCoding
+ - DateUtils
+ - DOMUtils
+ - FileUtils
+ - HtmlUtils
+ - StringUtils
 
 ## Installation
-In terminal run command ```composer require "arturdoruch/util"```,
-or add the following line to your composer.json require block
-```json
-"require": {
-    ...
-    "arturdoruch/util": "^1.2.1"
-},
+
+```sh
+composer require arturdoruch/util
 ```
-and run command ```composer update```.
