@@ -5,6 +5,8 @@ namespace ArturDoruch\Util\Json;
 /**
  * Handles encode and decode JSON.
  *
+ * @deprecated Use the https://github.com/arturdoruch/json package instead.
+ *
  * @author Artur Doruch <arturdoruch@interia.pl>
  */
 class Json
@@ -12,8 +14,8 @@ class Json
     private $decoded;
 
     /**
-     * @param string $json  Encoded JSON.
-     * @param bool   $array If true decoded JSON will be an associative array, otherwise a stdClass object.
+     * @param string $json Encoded JSON.
+     * @param bool $array If true decoded JSON will be an associative array, otherwise a stdClass object.
      */
     public function __construct($json, $array = true)
     {
