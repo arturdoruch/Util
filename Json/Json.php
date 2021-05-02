@@ -5,9 +5,9 @@ namespace ArturDoruch\Util\Json;
 /**
  * Handles encode and decode JSON.
  *
- * @deprecated Use the https://github.com/arturdoruch/json package instead.
- *
  * @author Artur Doruch <arturdoruch@interia.pl>
+ *
+ * @deprecated Use the "arturdoruch/json" component instead.
  */
 class Json
 {

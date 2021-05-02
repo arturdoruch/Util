@@ -4,6 +4,8 @@ namespace ArturDoruch\Util;
 
 /**
  * @author Artur Doruch <arturdoruch@interia.pl>
+ *
+ * @deprecated Use ArturDoruch\ArrayUtil\ArrayUtils from the "arturdoruch/array-util" component instead.
  */
 class ArrayUtils
 {
@@ -40,8 +42,8 @@ class ArrayUtils
     public static function inArrayI(array $haystack, $needle)
     {
         return !!array_filter($haystack, function ($value) use ($needle) {
-               return !is_array($value) && strtolower($needle) == strtolower($value);
-            });
+           return !is_array($value) && strtolower($needle) == strtolower($value);
+        });
     }
 
     /**
@@ -124,7 +126,7 @@ class ArrayUtils
      */
     public static function flatten(array $array, $preserveKeys = false)
     {
-        $flatten = array();
+        $flatten = [];
         $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($array));
 
         foreach($iterator as $key => $value) {
@@ -190,8 +192,7 @@ class ArrayUtils
      */
     public static function findBranch($searchField, $searchValue, array $items)
     {
-        $branch = array();
-
+        $branch = [];
         $iterationArray = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($items));
 
         foreach ($iterationArray as $sub) {
@@ -225,7 +226,7 @@ class ArrayUtils
      */
     public static function toAssociative(array $array)
     {
-        $associativeArray = array();
+        $associativeArray = [];
         foreach ($array as $key => $value) {
             if (is_string($value)) {
                 $associativeArray[$value] = $key;

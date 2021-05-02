@@ -4,6 +4,8 @@ namespace ArturDoruch\Util;
 
 /**
  * @author Artur Doruch <arturdoruch@interia.pl>
+ *
+ * @deprecated Use ArturDoruch\StringUtil\StringUtils from the "arturdoruch/string-util" component instead.
  */
 class CharacterCoding
 {

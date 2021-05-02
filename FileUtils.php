@@ -3,9 +3,9 @@
 namespace ArturDoruch\Util;
 
 /**
- * @deprecated Use the "arturdoruch/filesystem" component instead.
- *
  * @author Artur Doruch <arturdoruch@interia.pl>
+ *
+ * @deprecated Use the "arturdoruch/filesystem" component instead.
  */
 class FileUtils
 {
